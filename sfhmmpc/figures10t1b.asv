@@ -1,0 +1,93 @@
+a1=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss1c.mat');
+a2=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss1cc.mat');
+a3=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss2c.mat');
+a4=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss2cc.mat');
+a5=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss3c.mat');
+a6=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss3cc.mat');
+a7=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss4c.mat');
+a8=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm10t1ss4cc.mat');
+sqq=load('C:\Users\salma\MATLAB Drive\T9_ss_mpc\New Folder\sqq.mat');
+p=param10t1;
+ab=p.c;bc=p.rsei;soh=1;rs=p.rsei;
+sq=sqq.sqq;
+initial10t1;
+
+u=([1,2,3,4]).*p.c;%0.010652445
+rc=[0.0108,0.010623071,0.010592944, 0.01055331];
+rs=[0.0106525,0.010494084,0.01046781,0.010460115];
+pr=(100*(rc-rs))./rs; figure;
+subplot(2,1,1)
+plot(u,rs,'LineWidth',2);hold on;
+%plot(u,rc,'-.','LineWidth',2);hold on;
+grid on
+xlabel('Current Upper Bound [A]')
+ylabel('R film[\Omega m^2]')
+legend('R_{fIlm} for Controller 1 ')
+%title('a')
+%subplot(2,1,2)
+%figure
+%plot(u,pr,':','LineWidth',2);hold on;
+%grid on
+%xlabel('Maximum Current[A]')
+%ylabel('\Delta R_{film}[%]')
+%legend('Percentage differnce in R_{fIlm}  ')
+%title('b')
+%%
+sohsei=[99.95,99.9595101,99.96229382,99.9616633];
+sohcc=[99.938,99.9489397,99.95140858,99.95465693];
+    u=([1,2,3,4]).*p.c;
+    %figure;
+    subplot(2,1,2)
+ps=((sohsei-sohcc));
+plot(u,sohsei,'LineWidth',2);hold on;
+%plot(u,sohcc,'-.','LineWidth',2);hold on;
+grid on
+xlabel('Maximum Current[A]')
+ylabel('SoH[%]')
+legend('SoH for Controller 1  ')
+%title('a')
+%subplot(2,1,2)
+%figure
+%plot(u,ps,':','LineWidth',2);hold on;
+%grid on
+%xlabel('Maximum Current[A]')
+%ylabel('\Delta SoH[%]')
+%legend(' Differnce in SoH  ')
+%title('b')
+%%
+a5=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm2ccm.mat');
+a6=load('C:\Users\salma\MATLAB Drive\T10_SEI\sfhmmpc\dsfhm2com.mat');
+dsfhm4cc=a5.dsfhm2ccm;
+dsfhm4cv=a6.dsfhm2com;
+figure;
+%subplot(2,1,1)
+plot(dsfhm4cv.rs(1:484),'LineWidth',2);hold on;
+plot(dsfhm4cc.rs(1:471),'-.','LineWidth',2);hold on;
+plot(392,dsfhm4cc.rs(392),'*','LineWidth',5);hold on
+plot(392,dsfhm4cv.rs(392),'*','LineWidth',5);hold on
+plot(484,dsfhm4cv.rs(484),'*','LineWidth',5);hold on
+plot(ones(392)*dsfhm4cc.rs(392),'--');hold on
+plot(ones(392)*dsfhm4cv.rs(392),'--');hold on
+plot(ones(484)*dsfhm4cv.rs(484),'--');hold on
+grid on
+xlabel('cycles')
+ylabel('R film[\Omega m^2]')
+legend('R_{fIlm} for Controller 1 ','R_{fIlm} for CCCV')
+%title('a')
+%subplot(2,1,2)
+figure
+plot(100*dsfhm4cv.soh(1:484),'LineWidth',2);hold on;
+plot(100*dsfhm4cc.soh(1:392),'-.','LineWidth',2);hold on;
+plot(392,100*dsfhm4cc.soh(392),'*','LineWidth',2);hold on
+plot(392,100*dsfhm4cv.soh(392),'*','LineWidth',2);hold on
+plot(484,100*dsfhm4cv.soh(484),'*','LineWidth',2);hold on
+plot(ones(392)*100*dsfhm4cc.soh(392),'--');hold on
+plot(ones(392)*100*dsfhm4cv.soh(392),'--');hold on
+plot(ones(484)*100*dsfhm4cv.soh(484),'--');hold on
+grid on
+ylim([78 100])
+xlabel('cycles')
+ylabel('SoH[%]')
+legend('SoH for Controller 1 ','SoH for CCCV')
+%title('b')
+
